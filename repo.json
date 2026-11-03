@@ -1,7 +1,43 @@
 {
   "type": "ebook",
-  "name": "Free Books",
+  "name": "Arabic & Free Novels",
   "plugins": [
+    {
+      "id": "kolnovel",
+      "name": "ملوك الروايات",
+      "version": "1.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://kolnovel.com/favicon.ico",
+      "entry": "kolnovel.plugin.js"
+    },
+    {
+      "id": "rewayatclub",
+      "name": "نادي الروايات",
+      "version": "1.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://rewayat.club/favicon.ico",
+      "entry": "rewayatclub.plugin.js"
+    },
+    {
+      "id": "riwyat",
+      "name": "فضاء الروايات",
+      "version": "1.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://riwyat.com/favicon.ico",
+      "entry": "riwyat.plugin.js"
+    },
+    {
+      "id": "hindawi",
+      "name": "مؤسسة هنداوي",
+      "version": "1.0.2",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://www.safahat.org/favicon.ico",
+      "entry": "hindawi.plugin.js"
+    },
     {
       "id": "standardebooks",
       "name": "Standard Ebooks",
