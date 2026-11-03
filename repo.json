@@ -1,16 +1,7 @@
 {
   "type": "ebook",
-  "name": "Free Books (Hindawi + Standard Ebooks)",
+  "name": "Free Books",
   "plugins": [
-    {
-      "id": "hindawi",
-      "name": "مؤسسة هنداوي",
-      "version": "1.0.2",
-      "lang": "ar",
-      "nsfw": false,
-      "icon": "https://www.safahat.org/favicon.ico",
-      "entry": "hindawi.plugin.js"
-    },
     {
       "id": "standardebooks",
       "name": "Standard Ebooks",
