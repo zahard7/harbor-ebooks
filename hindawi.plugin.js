@@ -1,10 +1,18 @@
 // Harbor eBook source: مؤسسة هنداوي (safahat.org) — free Arabic books published by the foundation.
 const BASE = "https://www.safahat.org";
 const PAGE_SIZE = 20;
+const HEADERS = {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  "Accept-Language": "ar,en;q=0.8",
+};
 
 async function getDoc(path) {
-  const res = await harbor.http(BASE + path, { responseType: "text" });
-  if (!res.ok) throw new Error("http " + res.status + " for " + path + " :: " + String(res.body || "").slice(0, 120));
+  const res = await harbor.http(BASE + path, { responseType: "text", headers: HEADERS, timeoutMs: 30000 });
+  if (!res.ok) {
+    const m = /<title>([^<]*)<\/title>/i.exec(String(res.body || ""));
+    throw new Error("http " + res.status + " [" + (m ? m[1].trim() : "no title") + "] for " + path);
+  }
   return harbor.parseHtml(res.body);
 }
 
