@@ -4,7 +4,7 @@ const PAGE_SIZE = 20;
 
 async function getDoc(path) {
   const res = await harbor.http(BASE + path, { responseType: "text" });
-  if (!res.ok) throw new Error("http " + res.status + " for " + path);
+  if (!res.ok) throw new Error("http " + res.status + " for " + path + " :: " + String(res.body || "").slice(0, 120));
   return harbor.parseHtml(res.body);
 }
 
@@ -41,6 +41,11 @@ const plugin = {
   name: "مؤسسة هنداوي",
 
   async popular(offset, tagId) {
+    try { return await this._popular(offset, tagId); }
+    catch (e) { return [{ id: "debug-error", title: "DEBUG: " + (e && e.message ? e.message : String(e)) }]; }
+  },
+
+  async _popular(offset, tagId) {
     const page = Math.floor((offset || 0) / PAGE_SIZE) + 1;
     let path;
     if (tagId && tagId.startsWith("cat:")) {
@@ -49,7 +54,12 @@ const plugin = {
       path = "/books/" + (page > 1 ? page + "/" : "");
     }
     const doc = await getDoc(path);
-    return doc.querySelectorAll("li.bookCover").map(cardToSummary).filter(Boolean);
+    const items = doc.querySelectorAll("li.bookCover").map(cardToSummary).filter(Boolean);
+    if (!items.length) {
+      const t = doc.querySelector("title");
+      throw new Error("0 items, page title: " + (t ? t.text() : "?"));
+    }
+    return items;
   },
 
   async search(query, offset, tagId) {
